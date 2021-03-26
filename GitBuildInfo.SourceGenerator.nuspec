@@ -21,11 +21,9 @@
   </metadata>
   <files>
     <file src="$BaseOutputPath$GitBuildInfo.SourceGenerator.dll" target="analyzers\cs\GitBuildInfo.SourceGenerator.dll" />
-    <!-- <file src="$BaseOutputPath$YamlDotNet.dll" target="analyzers\cs\YamlDotNet.dll" /> -->    
     <file src="$BaseOutputPath$Microsoft.Bcl.AsyncInterfaces.dll" target="analyzers\cs\Microsoft.Bcl.AsyncInterfaces.dll" />
     <file src="$BaseOutputPath$System.Text.Json.dll" target="analyzers\cs\System.Text.Json.dll" />
     <file src="$BaseOutputPath$System.Text.Encodings.Web.dll" target="analyzers\cs\System.Text.Encodings.Web.dll" />
-    <!-- <file src="readme.txt" target="readme.txt" /> -->
     <file src="build\**" target="build\" />
     <file src="tools\**" target="tools\" />
   </files>
