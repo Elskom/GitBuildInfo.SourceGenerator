@@ -14,7 +14,6 @@
     <ItemGroup>
       <!-- Analysis of C# projects -->
       <TfmSpecificPackageFile Include="$(TargetPath)" PackagePath="analyzers\cs\" />
-      <!-- <TfmSpecificPackageFile Include="@(ReferencePath)" PackagePath="analyzers\cs\" Condition=" '%(FileName)%(Extension)' == 'YamlDotNet.dll' " /> -->
       <TfmSpecificPackageFile Include="@(ReferencePath)" PackagePath="analyzers\cs\" Condition=" '%(FileName)%(Extension)' == 'Microsoft.Bcl.AsyncInterfaces.dll' " />
       <TfmSpecificPackageFile Include="@(ReferencePath)" PackagePath="analyzers\cs\" Condition=" '%(FileName)%(Extension)' == 'System.Text.Json.dll' " />
       <TfmSpecificPackageFile Include="@(ReferencePath)" PackagePath="analyzers\cs\" Condition=" '%(FileName)%(Extension)' == 'System.Text.Encodings.Web.dll' " />
