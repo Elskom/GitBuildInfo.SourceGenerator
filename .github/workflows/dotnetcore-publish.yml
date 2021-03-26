@@ -1,0 +1,41 @@
+name: .NET Core (build & publish release)
+
+on:
+  push:
+    tags:
+    - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
+    steps:
+    - uses: actions/checkout@v2
+    - name: .NET core build
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.100-preview.2.21155.3
+    - name: Restore
+      run: dotnet restore
+      shell: bash
+
+    - name: Build with dotnet
+      run: |
+        dotnet build --configuration Release --no-restore
+        dotnet pack --configuration Release --no-build
+      shell: bash
+
+    - name: Publish Release
+      id: publish_nuget
+      uses: rohith/publish-nuget@v2
+      with:
+        # Filepath of the project to be packaged, relative to root of repository
+        PROJECT_FILE_PATH: PublishRefAssemblies.Sdk/PublishRefAssemblies.Sdk.csproj
+        # Flag to toggle git tagging, enabled by default
+        TAG_COMMIT: false
+        # API key to authenticate with NuGet server
+        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+        INCLUDE_SYMBOLS: false

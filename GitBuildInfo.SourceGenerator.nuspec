@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>GitBuildInfo.SourceGenerator</id>
+    <version>$version$</version>
+    <authors>Els_kom org.</authors>
+    <developmentDependency>true</developmentDependency>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/Elskom/GitBuildInfo.SourceGenerator</projectUrl>
+    <description>Source Generator for dumping the git branch information, commit hash, and if the working tree is dirty or clean on projects that install this and applies them as an assembly level attribute.</description>
+    <releaseNotes>$PackageReleaseNotes$</releaseNotes>
+    <copyright>Copyright (c) 2021</copyright>
+    <repository type="git" url="https://github.com/Elskom/GitBuildInfo.SourceGenerator.git" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="System.Memory" version="4.5.4" include="All" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="$BaseOutputPath$GitBuildInfo.SourceGenerator.dll" target="analyzers\cs\GitBuildInfo.SourceGenerator.dll" />
+    <!-- <file src="$BaseOutputPath$YamlDotNet.dll" target="analyzers\cs\YamlDotNet.dll" /> -->    
+    <file src="$BaseOutputPath$Microsoft.Bcl.AsyncInterfaces.dll" target="analyzers\cs\Microsoft.Bcl.AsyncInterfaces.dll" />
+    <file src="$BaseOutputPath$System.Text.Json.dll" target="analyzers\cs\System.Text.Json.dll" />
+    <file src="$BaseOutputPath$System.Text.Encodings.Web.dll" target="analyzers\cs\System.Text.Encodings.Web.dll" />
+    <!-- <file src="readme.txt" target="readme.txt" /> -->
+    <file src="build\**" target="build\" />
+    <file src="tools\**" target="tools\" />
+  </files>
+</package>

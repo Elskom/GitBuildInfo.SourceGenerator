@@ -1,0 +1,49 @@
+name: .NET Core (build pull request)
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
+    steps:
+    - uses: actions-ecosystem/action-remove-labels@v1.1.0
+      continue-on-error: true
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        labels: |
+          enhancement
+          automerge
+
+    - uses: actions/checkout@v2
+    - name: .NET core build
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.100-preview.2.21155.3
+    - name: Restore
+      run: |
+        dotnet nuget add source "https://api.nuget.org/v3/index.json" --name "nuget.org"
+        dotnet restore
+      shell: bash
+
+    - name: Build with dotnet
+      run: |
+        dotnet build --configuration Release --no-restore
+        dotnet pack --configuration Release --no-build
+      shell: bash
+
+    - uses: hmarr/auto-approve-action@v2.1.0
+      if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]' || github.actor == 'AraHaan' || github.actor == 'CatGirlsAreLife' || github.actor == 'Raitou' || github.actor == 'JunichiSama' || github.actor == 'xioke' || github.actor == 'Elskom-gitsync'
+      with:
+        # I think this must stay the same.
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+    - uses: actions-ecosystem/action-add-labels@v1
+      if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]' || github.actor == 'AraHaan' || github.actor == 'CatGirlsAreLife' || github.actor == 'Raitou' || github.actor == 'JunichiSama' || github.actor == 'xioke' || github.actor == 'Elskom-gitsync'
+      with:
+        github_token: ${{ secrets.GITSYNC_TOKEN }}
+        labels: |
+          enhancement
+          automerge
