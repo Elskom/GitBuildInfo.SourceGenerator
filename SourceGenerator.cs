@@ -45,12 +45,12 @@ namespace GitBuildInfo.SourceGenerator
                     ReadCommentHandling = JsonCommentHandling.Skip,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 });
-            if (string.IsNullOrEmpty(options.AssemblyType))
+            if (string.IsNullOrEmpty(options!.AssemblyType))
             {
                 throw new GenerationFailedException("AssemblyType should not be null or an empty string.");
             }
 
-            var splitted = options.AssemblyType!.Contains(".") ? options.AssemblyType.Split('.') : new string[] { };
+            var splitted = options!.AssemblyType!.Contains(".") ? options!.AssemblyType.Split('.') : new string[] { };
             var splittedLen = splitted.Length;
             var usingStr = new StringBuilder();
             var gitinformationNamespace = "Elskom.Generic.Libs";
@@ -75,8 +75,8 @@ namespace GitBuildInfo.SourceGenerator
                     this.RunGit("describe --all --always --dirty", Directory.GetParent(gitBuildInfoJsonFile.Path).FullName),
                     this.RunGit("rev-parse --short HEAD", Directory.GetParent(gitBuildInfoJsonFile.Path).FullName),
                     this.RunGit("name-rev --name-only HEAD", Directory.GetParent(gitBuildInfoJsonFile.Path).FullName),
-                    splittedLen > 0 ? splitted[splittedLen - 1] : options.AssemblyType,
-                    options.IsGeneric ? "<>" : string.Empty));
+                    splittedLen > 0 ? splitted[splittedLen - 1] : options!.AssemblyType,
+                    options!.IsGeneric ? "<>" : string.Empty));
         }
 
         private string RunGit(string arguments, string workingDirectory)
