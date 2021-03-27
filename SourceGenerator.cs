@@ -30,25 +30,21 @@ namespace GitBuildInfo.SourceGenerator
                 return;
             }
 
-            GeneratorOptions? options = null;
             var gitBuildInfoJsonFile = context.AdditionalFiles
                 .FirstOrDefault(af => string.Equals(Path.GetFileName(af.Path), "GitBuildInfo.json", StringComparison.OrdinalIgnoreCase));
-            if (gitBuildInfoJsonFile is object)
+            if (gitBuildInfoJsonFile is null)
             {
-                var optionsJson = gitBuildInfoJsonFile.GetText(context.CancellationToken)!.ToString();
-                options = JsonSerializer.Deserialize<GeneratorOptions>(optionsJson, new JsonSerializerOptions
+                return;
+            }
+            
+            var options = JsonSerializer.Deserialize<GeneratorOptions>(
+                gitBuildInfoJsonFile.GetText(context.CancellationToken)!.ToString(),
+                new JsonSerializerOptions
                 {
                     AllowTrailingCommas = true,
                     ReadCommentHandling = JsonCommentHandling.Skip,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 });
-            }
-
-            if (options is null || gitBuildInfoJsonFile is null)
-            {
-                return;
-            }
-
             if (string.IsNullOrEmpty(options.AssemblyType))
             {
                 throw new GenerationFailedException("AssemblyType should not be null or an empty string.");
