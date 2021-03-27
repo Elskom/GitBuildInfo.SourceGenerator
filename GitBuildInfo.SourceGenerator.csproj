@@ -5,8 +5,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.0.1</Version>
-    <PackageReleaseNotes>Fixed some issues with generation.</PackageReleaseNotes>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>Removed default values from GeneratorOptions.</PackageReleaseNotes>
     <Company>Els_kom org.</Company>
     <Authors>Els_kom org.</Authors>
     <Copyright>Copyright (c) 2021</Copyright>
