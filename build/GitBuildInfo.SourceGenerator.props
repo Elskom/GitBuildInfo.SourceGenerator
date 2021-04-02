@@ -2,5 +2,6 @@
   
   <ItemGroup>
     <AdditionalFiles Include="GitBuildInfo.json" Condition="Exists('GitBuildInfo.json')" />
+    <AdditionalFiles Include="GitInfo.json" Condition="Exists('GitInfo.json')" />
   </ItemGroup>
 </Project>
