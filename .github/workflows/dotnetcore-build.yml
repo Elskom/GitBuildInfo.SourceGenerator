@@ -13,23 +13,10 @@ jobs:
       DOTNET_NOLOGO: true
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     - name: .NET core build
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.100-preview.3.21202.5
-
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args: >
-          -Dsonar.organization=elskom
-          -Dsonar.projectKey=Elskom_GitBuildInfo.SourceGenerator
-          -Dsonar.verbose=true
 
     - name: Restore
       run: dotnet restore

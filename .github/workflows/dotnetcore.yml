@@ -10,32 +10,11 @@ jobs:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       DOTNET_NOLOGO: true
     steps:
-    - uses: actions-ecosystem/action-remove-labels@v1.1.0
-      continue-on-error: true
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        labels: |
-          enhancement
-          automerge
-
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     - name: .NET core build
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.100-preview.3.21202.5
-
-    - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args: >
-          -Dsonar.organization=elskom
-          -Dsonar.projectKey=Elskom_GitBuildInfo.SourceGenerator
-          -Dsonar.verbose=true
 
     - name: Restore
       run: dotnet restore
@@ -46,16 +25,3 @@ jobs:
         dotnet build --configuration Release --no-restore
         dotnet pack --configuration Release --no-build
       shell: bash
-
-    - uses: hmarr/auto-approve-action@v2.1.0
-      if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]' || github.actor == 'AraHaan' || github.actor == 'CatGirlsAreLife' || github.actor == 'Raitou' || github.actor == 'JunichiSama' || github.actor == 'xioke' || github.actor == 'Elskom-gitsync'
-      with:
-        # I think this must stay the same.
-        github-token: "${{ secrets.GITHUB_TOKEN }}"
-    - uses: actions-ecosystem/action-add-labels@v1
-      if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]' || github.actor == 'AraHaan' || github.actor == 'CatGirlsAreLife' || github.actor == 'Raitou' || github.actor == 'JunichiSama' || github.actor == 'xioke' || github.actor == 'Elskom-gitsync'
-      with:
-        github_token: ${{ secrets.GITSYNC_TOKEN }}
-        labels: |
-          enhancement
-          automerge

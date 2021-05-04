@@ -1,0 +1,99 @@
+pull_request_rules:
+  # for check failures / WIP pending check.
+  - name: Add enhancement label
+    conditions:
+      - -check-success=build
+      - -check-failure=build
+      - -check-neutral=build
+      - -closed
+      - -label=enhancement
+    actions:
+      label:
+        add:
+          - enhancement
+
+  - name: Add automerge label
+    conditions:
+      - check-success=build
+      - check-success=Codacy Security Scan
+      - -draft
+      - -closed
+      - -label=automerge
+      - author~=^(AraHaan|CatGirlsAreLife|JunichiSama|xioke|Elskom-gitsync|dependabot(|-preview)\[bot\])$
+    actions:
+      label:
+        add:
+          - automerge
+
+  - name: Automatic message on build failure
+    conditions:
+      - check-failure=build
+      - -draft
+      - -closed
+    actions:
+      comment:
+        message: |
+          This PR's build has failed. Ensure it passes before they can be scheduled for automatic merge.
+
+  - name: Automatic message on security failure
+    conditions:
+      - check-failure=Codacy Static Code Analysis
+      - -draft
+      - -closed
+    actions:
+      comment:
+        message: |
+          This PR's security check has failed. Ensure it passes before they can be scheduled for automatic merge.
+
+  - name: Automatic message on signoff failure
+    conditions:
+      - check-failure=DCO
+      - -draft
+      - -closed
+    actions:
+      comment:
+        message: |
+          This PR does not add the DCO signoff. Ensure it does before they can be scheduled for automatic merge.
+          To do that click the details link on the check below to find the steps to resolve this and then force push using ``git push --force`` after it has been completed.
+          If the PR has multiple commits to simplify it you can also run ``git rebase -i HEAD~x`` where x is the number of commits inside of the PR, then in the interactive program that is opened to edit the data change every line under the first one that starts with ``pick`` to ``fixup`` then save and exit the program git opens, after that git will rebase them into each other and squashes them into a single commit where then you can run ``git commit --amend --signoff`` then force push.
+
+  - name: Automatic message on WIP
+    conditions:
+      - -check-failure=WIP
+      - -check-success=WIP
+      - -check-neutral=WIP
+      - -draft
+      - -closed
+    actions:
+      comment:
+        message: This PR is WIP, when you complete the work remember to unset the WIP state in the title of this PR.
+
+  - name: Automatic merge when automerge label added
+    conditions:
+      - -conflict # skip PRs with conflicts
+      - -draft # filter-out GH draft PRs
+      - -closed # filter-out closed GH PRs
+      - base=main
+      - label=automerge
+      - check-success=build
+      - check-success=Codacy Security Scan
+      - check-success=Codacy Static Code Analysis
+      - check-success=Checkov (reported by Codacy)
+      - check-success=Jacksonlinter (reported by Codacy)
+      - check-success=Remark-lint (reported by Codacy)
+      - check-success=Sonarscharp (reported by Codacy)
+      - check-success=DCO
+      - check-success=WIP
+    actions:
+      comment:
+        message: This pull request is about to be automerged.
+      review:
+        type: APPROVE
+        message: Automatically approving since automerge label was found.
+      merge:
+        strict: smart+fasttrack
+        strict_method: rebase
+        method: squash
+      label:
+        remove:
+          - automerge
