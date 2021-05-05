@@ -2,9 +2,7 @@ pull_request_rules:
   # for check failures / WIP pending check.
   - name: Add enhancement label
     conditions:
-      - -check-success=build
-      - -check-failure=build
-      - -check-neutral=build
+      - check-pending=build
       - -closed
       - -label=enhancement
     actions:
@@ -59,9 +57,7 @@ pull_request_rules:
 
   - name: Automatic message on WIP
     conditions:
-      - -check-failure=WIP
-      - -check-success=WIP
-      - -check-neutral=WIP
+      - check-pending=WIP
       - -draft
       - -closed
     actions:
