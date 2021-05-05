@@ -22,7 +22,7 @@
     <file src="$BaseOutputPath$Microsoft.Bcl.AsyncInterfaces.dll" target="analyzers\cs\Microsoft.Bcl.AsyncInterfaces.dll" />
     <file src="$BaseOutputPath$System.Text.Json.dll" target="analyzers\cs\System.Text.Json.dll" />
     <file src="$BaseOutputPath$System.Text.Encodings.Web.dll" target="analyzers\cs\System.Text.Encodings.Web.dll" />
-    <file src="build\**" target="build\" />
-    <file src="tools\**" target="tools\" />
+    <file src="..\build\**" target="build\" />
+    <file src="..\tools\**" target="tools\" />
   </files>
 </package>

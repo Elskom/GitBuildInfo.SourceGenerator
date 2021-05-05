@@ -5,8 +5,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.0.4</Version>
-    <PackageReleaseNotes>Fixed generating sources.</PackageReleaseNotes>
+    <Version>1.0.5</Version>
+    <PackageReleaseNotes>Performance Improvements.</PackageReleaseNotes>
     <Company>Els_kom org.</Company>
     <Authors>Els_kom org.</Authors>
     <Copyright>Copyright (c) 2021</Copyright>
@@ -24,10 +24,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="build\**">
+    <None Include="..\build\**">
       <Pack>true</Pack>
       <PackagePath>build\</PackagePath>
     </None>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyName).Tests</_Parameter1> <!-- We use the value of AssemblyName to declare the value of the attribute -->
+    </AssemblyAttribute>
   </ItemGroup>
 
   <ItemDefinitionGroup>
