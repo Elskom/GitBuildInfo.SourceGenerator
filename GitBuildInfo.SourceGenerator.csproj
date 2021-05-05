@@ -39,7 +39,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.10.0-3.21254.30" />
     <PackageReference Include="Nullable" Version="1.3.0" />
-    <PackageReference Include="System.Text.Json" Version="6.0.0-preview.5.21254.8" />
+    <PackageReference Include="System.Text.Json" Version="6.0.0-preview.5.21254.9" />
   </ItemGroup>
 
   <Import Project="$(MSBuildProjectName).targets" />
