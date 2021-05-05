@@ -21,10 +21,10 @@ jobs:
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@main
 
       - name: .NET core build
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@main
         with:
           dotnet-version: 6.0.100-preview.3.21202.5
 
@@ -44,7 +44,7 @@ jobs:
 
       # Execute Codacy Analysis CLI and generate a SARIF output with the security issues identified during the analysis
       - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@3.0.1
+        uses: codacy/codacy-analysis-cli-action@master
         with:
           api-token: ${{ secrets.CODACY_API_TOKEN }}
           verbose: true
@@ -58,6 +58,6 @@ jobs:
 
       # Upload the SARIF file generated in the previous step
       - name: Upload SARIF results file
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@main
         with:
           sarif_file: results.sarif
