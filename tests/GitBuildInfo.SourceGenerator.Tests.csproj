@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.10.0-3.21254.9" />
-    <PackageReference Include="System.Text.Json" Version="6.0.0-preview.5.21254.9" />
+    <PackageReference Include="System.Text.Json" Version="6.0.0-preview.5.21255.7" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
