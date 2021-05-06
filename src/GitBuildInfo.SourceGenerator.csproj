@@ -5,8 +5,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.0.5</Version>
-    <PackageReleaseNotes>Performance Improvements.</PackageReleaseNotes>
+    <Version>1.0.6</Version>
+    <PackageReleaseNotes>Fixed Build Task.</PackageReleaseNotes>
     <Company>Els_kom org.</Company>
     <Authors>Els_kom org.</Authors>
     <Copyright>Copyright (c) 2021</Copyright>

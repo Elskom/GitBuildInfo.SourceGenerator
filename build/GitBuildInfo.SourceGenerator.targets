@@ -8,7 +8,7 @@
       <OutputPath Required="true" />
     </ParameterGroup>
     <Task>
-      <Code Source="GitInfoTask.cs" />
+      <Code Source="$(MSBuildThisFileDirectory)\GitInfoTask.cs" />
     </Task>
   </UsingTask>
 
