@@ -90,6 +90,12 @@ pull_request_rules:
         strict: smart+fasttrack
         strict_method: rebase
         method: squash
+
+  - name: Remove automerge label
+    conditions:
+      - closed
+      - label=automerge
+    actions:
       label:
         remove:
           - automerge
