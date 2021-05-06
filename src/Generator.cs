@@ -78,7 +78,7 @@
             };
             if (string.IsNullOrEmpty(generator.options!.AssemblyType))
             {
-                throw new GenerationFailedException("AssemblyType should not be null or an empty string.");
+                throw new InvalidOperationException("AssemblyType should not be null or an empty string.");
             }
 
             return generator;
