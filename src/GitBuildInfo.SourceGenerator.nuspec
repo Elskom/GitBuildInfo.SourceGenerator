@@ -19,9 +19,23 @@
   </metadata>
   <files>
     <file src="$BaseOutputPath$GitBuildInfo.SourceGenerator.dll" target="analyzers\cs\GitBuildInfo.SourceGenerator.dll" />
+    <file src="$BaseOutputPath$Microsoft.CodeAnalysis.dll" target="analyzers\cs\Microsoft.CodeAnalysis.dll" />
     <file src="$BaseOutputPath$Microsoft.Bcl.AsyncInterfaces.dll" target="analyzers\cs\Microsoft.Bcl.AsyncInterfaces.dll" />
     <file src="$BaseOutputPath$System.Text.Json.dll" target="analyzers\cs\System.Text.Json.dll" />
     <file src="$BaseOutputPath$System.Text.Encodings.Web.dll" target="analyzers\cs\System.Text.Encodings.Web.dll" />
+    <file src="$BaseOutputPath$cs\**" target="analyzers\cs\cs\" />
+    <file src="$BaseOutputPath$de\**" target="analyzers\cs\de\" />
+    <file src="$BaseOutputPath$es\**" target="analyzers\cs\es\" />
+    <file src="$BaseOutputPath$fr\**" target="analyzers\cs\fr\" />
+    <file src="$BaseOutputPath$it\**" target="analyzers\cs\it\" />
+    <file src="$BaseOutputPath$ja\**" target="analyzers\cs\ja\" />
+    <file src="$BaseOutputPath$ko\**" target="analyzers\cs\ko\" />
+    <file src="$BaseOutputPath$pl\**" target="analyzers\cs\pl\" />
+    <file src="$BaseOutputPath$pt-BR\**" target="analyzers\cs\pt-BR\" />
+    <file src="$BaseOutputPath$ru\**" target="analyzers\cs\ru\" />
+    <file src="$BaseOutputPath$tr\**" target="analyzers\cs\tr\" />
+    <file src="$BaseOutputPath$zh-Hans\**" target="analyzers\cs\zh-Hans\" />
+    <file src="$BaseOutputPath$zh-Hant\**" target="analyzers\cs\zh-Hant\" />
     <file src="..\build\**" target="build\" />
     <file src="..\tools\**" target="tools\" />
   </files>
