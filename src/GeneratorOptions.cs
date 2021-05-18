@@ -1,13 +1,24 @@
 ﻿namespace GitBuildInfo.SourceGenerator
 {
+    using System;
+    using System.Runtime.CompilerServices;
     using System.Text.Json.Serialization;
 
     public record GeneratorOptions
     {
-        [JsonPropertyName("AssemblyType")]
-        public string? AssemblyType { get; set; }
+        [JsonPropertyName(nameof(AssemblyType))]
+        public string? AssemblyType { get; init; }
 
-        [JsonPropertyName("IsGeneric")]
-        public bool IsGeneric { get; set; }
+        [JsonPropertyName(nameof(IsGeneric))]
+        public bool IsGeneric { get; init; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Validate()
+        {
+            if (string.IsNullOrEmpty(this.AssemblyType))
+            {
+                throw new InvalidOperationException("AssemblyType should not be null or an empty string.");
+            }
+        }
     }
 }

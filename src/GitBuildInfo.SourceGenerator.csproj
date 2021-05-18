@@ -5,8 +5,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Version>1.0.8</Version>
-    <PackageReleaseNotes>Added missing assembly to package.</PackageReleaseNotes>
+    <Version>1.0.9</Version>
+    <PackageReleaseNotes>Fixed a generator bug.</PackageReleaseNotes>
     <Company>Els_kom org.</Company>
     <Authors>Els_kom org.</Authors>
     <Copyright>Copyright (c) 2021</Copyright>
@@ -42,6 +42,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="*-*" />
     <PackageReference Include="Nullable" Version="*-*" />
+    <PackageReference Include="IsExternalInit" Version="*-*" />
     <PackageReference Include="System.Text.Json" Version="*-*" />
   </ItemGroup>
 

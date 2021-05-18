@@ -15,18 +15,18 @@
         public static string CreateAndGenerateCode(string optionsText, string gitInfoText)
         {
             var generator = Create(optionsText, gitInfoText);
-            var splitted = generator.options!.AssemblyType!.Contains(".") ? generator.options!.AssemblyType.Split('.') : Array.Empty<string>();
-            var splitted2 = splitted.AsSpan().Slice(0, splitted.Length - 1);
+            var splitted = generator.options!.AssemblyType!.Contains(".") ? generator.options.AssemblyType.Split('.') : Array.Empty<string>();
+            var splitted2 = splitted.AsSpan().Slice(0, splitted.Length > 0 ? splitted.Length - 1 : 0);
             return generator.GenerateCode(
                 splitted2.ToArray(),
                 "Elskom.Generic.Libs",
-                splitted.Length > 0 ? splitted[splitted2.Length] : generator.options!.AssemblyType).ToFullString();
+                splitted.Length > 0 ? splitted[splitted2.Length] : generator.options.AssemblyType).ToFullString();
         }
 
         public CompilationUnitSyntax GenerateCode(string[] usings, string originalnamespace, string typeName)
             => SyntaxFactory.CompilationUnit().WithUsings(
                     SyntaxFactory.List(
-                        string.Equals(string.Join(".", usings), originalnamespace, StringComparison.Ordinal)
+                        string.Equals(string.Join(".", usings), originalnamespace, StringComparison.Ordinal) || usings.Length is 0
                             ? new[]
                             {
                                 AddUsing(new[] {"Elskom", "Generic", "Libs"}, true)
@@ -76,11 +76,7 @@
                 options = JsonSerializer.Deserialize<GeneratorOptions>(optionsText, serializerOptions),
                 gitInfo = JsonSerializer.Deserialize<GitInfo>(gitInfoText, serializerOptions),
             };
-            if (string.IsNullOrEmpty(generator.options!.AssemblyType))
-            {
-                throw new InvalidOperationException("AssemblyType should not be null or an empty string.");
-            }
-
+            generator.options!.Validate();
             return generator;
         }
 
