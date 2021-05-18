@@ -4,13 +4,13 @@
 
     public record GitInfo
     {
-        [JsonPropertyName("GitHead")]
-        public string? GitHead { get; set; }
+        [JsonPropertyName(nameof(GitHead))]
+        public string? GitHead { get; init; }
 
-        [JsonPropertyName("CommitHash")]
-        public string? CommitHash { get; set; }
+        [JsonPropertyName(nameof(CommitHash))]
+        public string? CommitHash { get; init; }
 
-        [JsonPropertyName("GitBranch")]
-        public string? GitBranch { get; set; }
+        [JsonPropertyName(nameof(GitBranch))]
+        public string? GitBranch { get; init; }
     }
 }
