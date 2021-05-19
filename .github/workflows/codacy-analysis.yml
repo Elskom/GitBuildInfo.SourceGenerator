@@ -26,7 +26,8 @@ jobs:
       - name: .NET core build
         uses: actions/setup-dotnet@main
         with:
-          dotnet-version: 6.0.100-preview.3.21202.5
+          dotnet-version: '6.0.x'
+          include-prerelease: true
 
       - name: Restore
         run: dotnet restore
