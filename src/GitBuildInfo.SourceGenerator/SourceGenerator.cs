@@ -1,8 +1,6 @@
 ﻿namespace GitBuildInfo.SourceGenerator
 {
     using System;
-    using System.IO;
-    using System.Linq;
     using System.Text;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
@@ -28,21 +26,18 @@
                 return;
             }
 
-            var gitBuildInfoJsonFile = context.AdditionalFiles
-                .FirstOrDefault(af => string.Equals(Path.GetFileName(af.Path), "GitBuildInfo.json", StringComparison.OrdinalIgnoreCase));
-            var gitInfoJsonFile = context.AdditionalFiles
-                .FirstOrDefault(af => string.Equals(Path.GetFileName(af.Path), "GitInfo.json", StringComparison.OrdinalIgnoreCase));
-            if (gitBuildInfoJsonFile is null || gitInfoJsonFile is null)
-            {
-                return;
-            }
-
+            _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitBuildInfoAssemblyType", out var assemblyType);
+            _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitBuildInfoIsGeneric", out var isGeneric);
+            _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitHead", out var gitHead);
+            _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.CommitHash", out var commitHash);
+            _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitBranch", out var gitBranch);
             context.AddSource(
                 "GitAssemblyInfo.g.cs",
                 SourceText.From(
                     Generator.CreateAndGenerateCode(
-                        gitBuildInfoJsonFile.GetText(context.CancellationToken)!.ToString(),
-                        gitInfoJsonFile.GetText(context.CancellationToken)!.ToString()),
+                        new GeneratorOptions { AssemblyType = assemblyType, IsGeneric = Convert.ToBoolean(isGeneric) },
+                        new GitInfo { GitHead = gitHead, CommitHash = commitHash, GitBranch = gitBranch },
+                        context),
                     Encoding.UTF8));
         }
     }

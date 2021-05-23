@@ -1,0 +1,14 @@
+<Project>
+
+  <ItemDefinitionGroup>
+    <PackageReference>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemDefinitionGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="*-*" />
+    <PackageReference Include="IsExternalInit" Version="*-*" />
+  </ItemGroup>
+
+</Project>
