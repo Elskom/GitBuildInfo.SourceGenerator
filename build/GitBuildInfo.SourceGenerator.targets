@@ -12,7 +12,8 @@
     </Task>
   </UsingTask>
 
-  <Target Name="BeforeCompile">
+  <Target Name="BeforeBuild">
     <GitInfoTask OutputPath="$(MSBuildProjectDirectory)\GitInfo.json" />
   </Target>
+
 </Project>
