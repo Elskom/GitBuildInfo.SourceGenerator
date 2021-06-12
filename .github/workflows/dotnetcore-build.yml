@@ -19,16 +19,8 @@ jobs:
         dotnet-version: '6.0.x'
         include-prerelease: true
 
-    - name: Restore
-      run: dotnet restore
-      shell: bash
-
-    - name: Build with dotnet
-      run: |
-        dotnet build --configuration Release --no-restore
-        dotnet pack --configuration Release --no-build --no-restore
-      shell: bash
-
-    - name: Test
-      run: dotnet test --configuration Release --no-build --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=./coverage.codacy.opencover.xml
-      shell: bash
+    - name: Restore, Build, test, and pack
+      uses: Elskom/build-dotnet@main
+      with:
+        SOLUTION_FILE_PATH: GitBuildInfo.SourceGenerator.sln
+        TEST: true
