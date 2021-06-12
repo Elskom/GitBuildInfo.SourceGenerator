@@ -5,15 +5,22 @@
              TaskFactory="RoslynCodeTaskFactory"
              AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
-      <OutputPath Required="true" />
+      <ProjectDir ParameterType="System.String" Required="true" />
+      <GitHead ParameterType="System.String" Output="true" />
+      <CommitHash ParameterType="System.String" Output="true" />
+      <GitBranch ParameterType="System.String" Output="true" />
     </ParameterGroup>
     <Task>
       <Code Source="$(MSBuildThisFileDirectory)GitInfoTask.cs" />
     </Task>
   </UsingTask>
 
-  <Target Name="BeforeBuild">
-    <GitInfoTask OutputPath="$(MSBuildProjectDirectory)\GitInfo.json" />
+  <Target Name="GitBuildInfo" AfterTargets="PrepareForBuild">
+    <GitInfoTask ProjectDir="$(MSBuildProjectDirectory)">
+      <Output TaskParameter="GitHead" PropertyName="GitHead" />
+      <Output TaskParameter="CommitHash" PropertyName="CommitHash" />
+      <Output TaskParameter="GitBranch" PropertyName="GitBranch" />
+    </GitInfoTask>
   </Target>
 
 </Project>

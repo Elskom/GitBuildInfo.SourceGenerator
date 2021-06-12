@@ -1,0 +1,31 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IsPackable>true</IsPackable>
+    <Version>1.0.10</Version>
+    <PackageReleaseNotes>Always properly output the git information so generation can always happen when configured correctly.</PackageReleaseNotes>
+    <Copyright>Copyright (c) 2021</Copyright>
+    <!-- Special properties for analyzer packages. -->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <NoWarn>$(NoWarn);NU5128;NU5127</NoWarn>
+    <NuSpecFile>GitBuildInfo.SourceGenerator.nuspec</NuSpecFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
+    <AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
+    <None Include="..\..\build\**">
+      <Pack>true</Pack>
+      <PackagePath>build\</PackagePath>
+    </None>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyName).Tests</_Parameter1> <!-- We use the value of AssemblyName to declare the value of the attribute -->
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <Import Project="../../Directory.Build.props" />
+  <Import Project="$(MSBuildProjectName).targets" />
+
+</Project>

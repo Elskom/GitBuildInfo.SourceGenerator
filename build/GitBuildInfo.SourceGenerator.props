@@ -1,7 +1,15 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  
+
+  <PropertyGroup>
+    <GitBuildInfoIsGeneric Condition="'$(GitBuildInfoIsGeneric)' == ''">false</GitBuildInfoIsGeneric>
+  </PropertyGroup>
+
   <ItemGroup>
-    <AdditionalFiles Include="GitBuildInfo.json" Condition="Exists('GitBuildInfo.json')" />
-    <AdditionalFiles Include="GitInfo.json" Condition="Exists('GitInfo.json')" />
+    <CompilerVisibleProperty Include="GitBuildInfoAssemblyType" />
+    <CompilerVisibleProperty Include="GitBuildInfoIsGeneric" />
+    <CompilerVisibleProperty Include="GitHead" />
+    <CompilerVisibleProperty Include="CommitHash" />
+    <CompilerVisibleProperty Include="GitBranch" />
   </ItemGroup>
+
 </Project>

@@ -15,9 +15,6 @@
       <!-- Analysis of C# projects -->
       <TfmSpecificPackageFile Include="$(TargetPath)" PackagePath="analyzers\cs\" />
       <TfmSpecificPackageFile Include="@(ReferencePath)" PackagePath="analyzers\cs\" Condition=" '%(FileName)%(Extension)' == 'Microsoft.CodeAnalysis.dll' " />
-      <TfmSpecificPackageFile Include="@(ReferencePath)" PackagePath="analyzers\cs\" Condition=" '%(FileName)%(Extension)' == 'Microsoft.Bcl.AsyncInterfaces.dll' " />
-      <TfmSpecificPackageFile Include="@(ReferencePath)" PackagePath="analyzers\cs\" Condition=" '%(FileName)%(Extension)' == 'System.Text.Json.dll' " />
-      <TfmSpecificPackageFile Include="@(ReferencePath)" PackagePath="analyzers\cs\" Condition=" '%(FileName)%(Extension)' == 'System.Text.Encodings.Web.dll' " />
       <TfmSpecificPackageFile Include="@(SatelliteDllsProjectOutputGroupDependency)" PackagePath="analyzers\cs\%(SatelliteDllsProjectOutputGroupDependency.DestinationSubDirectory)" Condition=" '%(SatelliteDllsProjectOutputGroupDependency.DestinationSubDirectory)' != '' " />
       <TfmSpecificPackageFile Include="@(SatelliteDllsProjectOutputGroupOutput->'%(FinalOutputPath)')" PackagePath="analyzers\cs\%(SatelliteDllsProjectOutputGroupOutput.Culture)\" />
       <TfmSpecificPackageFile Include="%(_ResolvedProjectReferencePaths.Identity)" PackagePath="analyzers\cs\" />

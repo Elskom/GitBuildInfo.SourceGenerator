@@ -1,0 +1,25 @@
+<Project>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="*-*" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*-*" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.XUnit" Version="*-*" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.SourceGenerators.Testing" Version="*-*" />
+    <PackageReference Include="xunit" Version="*-*" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="*-*">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="*-*">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="*-*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <ProjectReference Include="../src/GitBuildInfo.SourceGenerator/GitBuildInfo.SourceGenerator.csproj" />
+    <ProjectReference Include="../src/Elskom.GitInformation/Elskom.GitInformation.csproj" />
+  </ItemGroup>
+
+</Project>
