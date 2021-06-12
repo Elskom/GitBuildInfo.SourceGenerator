@@ -29,13 +29,13 @@ jobs:
           dotnet-version: '6.0.x'
           include-prerelease: true
 
-      - name: Restore
-        run: dotnet restore
-        shell: bash
-
-      - name: Test
-        run: dotnet test --configuration Release --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=./coverage.codacy.opencover.xml
-        shell: bash
+      - name: Restore, Build, test, and pack
+        uses: Elskom/build-dotnet@main
+        with:
+          SOLUTION_FILE_PATH: 'GitBuildInfo.SourceGenerator.sln'
+          PACKAGE_PATH: artifacts/
+          TEST: true
+          PACK: false
 
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
