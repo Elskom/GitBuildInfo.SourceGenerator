@@ -3,7 +3,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis" Version="*-*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*-*" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.XUnit" Version="*-*" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.XUnit" Version="-*" />
     <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.SourceGenerators.Testing" Version="*-*" />
     <PackageReference Include="xunit" Version="*-*" />
     <PackageReference Include="xunit.runner.visualstudio" Version="*-*">
