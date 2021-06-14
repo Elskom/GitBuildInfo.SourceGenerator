@@ -27,7 +27,7 @@
     </PackageReference>
     <!-- Common .NET Dependency packages. -->
     <!-- For Span/ReadOnlySpan. -->
-    <PackageReference Include="System.Memory" Version="*-*" />
+    <PackageReference Include="System.Memory" Version="-*" />
     <ProjectReference Include="../GitBuildInfo.SourceGenerator/GitBuildInfo.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
