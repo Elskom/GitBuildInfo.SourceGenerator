@@ -22,7 +22,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <!-- SourceLink -->
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="*-*">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="-*">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <!-- Common .NET Dependency packages. -->
