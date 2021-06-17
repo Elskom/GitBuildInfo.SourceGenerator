@@ -57,7 +57,7 @@
             pro1.StartInfo.RedirectStandardOutput = true;
             pro1.StartInfo.UseShellExecute = false;
             pro1.StartInfo.CreateNoWindow = true;
-            pro1.StartInfo.WorkingDirectory = Path.GetFullPath(this.ProjectDir).Replace(Path.GetFileName(this.ProjectDir), string.Empty);
+            pro1.StartInfo.WorkingDirectory = this.ProjectDir;
             try
             {
                 _ = pro1.Start();
