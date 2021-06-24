@@ -42,10 +42,26 @@
         /// <inheritdoc/>
         public override bool Execute()
         {
+            var cache = (GitInfo)BuildEngine4.GetRegisteredTaskObject(this.ProjectDir, RegisteredTaskObjectLifetime.Build);
+            if (cache is not null)
+            {
+                this.GitHead = cache.Head;
+                this.CommitHash = cache.CommitHash;
+                this.GitBranch = cache.Branch;
+                return true;
+            }
+
             this.GitHead = this.RunGit("describe --all --always --dirty");
             this.CommitHash = this.RunGit("rev-parse --short HEAD");
             this.GitBranch = this.RunGit("name-rev --name-only HEAD");
             this.Log.LogMessage(MessageImportance.High, "Getting build info from git");
+            cache = new GitInfo()
+            {
+                Head = this.GitHead,
+                CommitHash = this.CommitHash,
+                Branch = this.GitBranch,
+            };
+            BuildEngine4.RegisterTaskObject(this.ProjectDir, cache, RegisteredTaskObjectLifetime.Build, false);
             return true;
         }
 
@@ -73,6 +89,15 @@
             {
                 return "Not a git clone or git is not in Path.";
             }
+        }
+
+        private class GitInfo
+        {
+            public string Head { get; set; }
+
+            public string CommitHash { get; set; }
+
+            public string Branch { get; set; }
         }
     }
 }
