@@ -6,8 +6,8 @@
     <PackageTags>GitBuildInformation</PackageTags>
     <Copyright>Copyright (c) 2019-2021</Copyright>
     <Description>A c# library that Registers git repository information on the assembly.</Description>
-    <PackageReleaseNotes>Initial Release.</PackageReleaseNotes>
-    <Version>1.0.0</Version>
+    <PackageReleaseNotes>Fixed bug in GitInformation.IsTag where it will never be true even when it should be.</PackageReleaseNotes>
+    <Version>1.0.1</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <NeutralLanguage>en-US</NeutralLanguage>
     <NoWarn>$(NoWarn);NU5104;NU5118</NoWarn>
