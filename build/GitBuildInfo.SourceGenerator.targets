@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project>
 
   <UsingTask TaskName="GitBuildInfo.GitInfoTask"
              TaskFactory="RoslynCodeTaskFactory"
@@ -15,7 +14,7 @@
     </Task>
   </UsingTask>
 
-  <Target Name="GitBuildInfo" AfterTargets="PrepareForBuild">
+  <Target Name="GitBuildInfo" AfterTargets="BeforeBuild">
     <GitInfoTask ProjectDir="$(MSBuildProjectDirectory)">
       <Output TaskParameter="GitHead" PropertyName="GitHead" />
       <Output TaskParameter="CommitHash" PropertyName="CommitHash" />

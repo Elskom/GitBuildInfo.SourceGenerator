@@ -7,6 +7,9 @@
 
   "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
   "settings": {
+    "layoutRules": {
+      "newlineAtEndOfFile": "require"
+    },
     "documentationRules": {
       "companyName": "Els_kom org.",
       "copyrightText": "Copyright (c) 2019-2021, {companyName}\nhttps://github.com/Elskom/\nAll rights reserved.\nlicense: MIT, see LICENSE for more details.",
