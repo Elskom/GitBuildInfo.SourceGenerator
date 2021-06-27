@@ -90,7 +90,7 @@ namespace Elskom.Generic.Libs
         /// <value>
         /// A value indicating whether refs point to a stable tag release.
         /// </value>
-        public bool IsTag => this.Headdesc.StartsWith("refs/tags", StringComparison.Ordinal);
+        public bool IsTag => this.Headdesc.StartsWith("tags/", StringComparison.Ordinal);
 
         /// <summary>
         /// Applies the <see cref="Attribute"/>s that the specified <see cref="Assembly"/> contains.
