@@ -1,18 +1,11 @@
-<Project>
+<Project TreatAsLocalProperty="TaskAssembly">
 
-  <UsingTask TaskName="GitBuildInfo.GitInfoTask"
-             TaskFactory="RoslynCodeTaskFactory"
-             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
-    <ParameterGroup>
-      <ProjectDir ParameterType="System.String" Required="true" />
-      <GitHead ParameterType="System.String" Output="true" />
-      <CommitHash ParameterType="System.String" Output="true" />
-      <GitBranch ParameterType="System.String" Output="true" />
-    </ParameterGroup>
-    <Task>
-      <Code Source="$(MSBuildThisFileDirectory)GitInfoTask.cs" />
-    </Task>
-  </UsingTask>
+  <PropertyGroup>
+    <TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\netstandard2.0\GitBuildInfo.dll</TaskAssembly>
+    <TaskAssembly Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)..\tasks\net472\GitBuildInfo.dll</TaskAssembly>
+  </PropertyGroup>
+
+  <UsingTask TaskName="GitBuildInfo.GitInfoTask" AssemblyFile="$(TaskAssembly)" />
 
   <Target Name="GitBuildInfo" AfterTargets="BeforeBuild">
     <GitInfoTask ProjectDir="$(MSBuildProjectDirectory)">

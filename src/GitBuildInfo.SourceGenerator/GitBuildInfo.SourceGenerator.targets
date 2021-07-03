@@ -6,7 +6,7 @@
 
   <Target Name="SetNuSpecProperties" BeforeTargets="GenerateNuspec">
     <PropertyGroup>
-      <NuspecProperties>$(NuspecProperties);Version=$(Version);BaseOutputPath=$(OutputPath);PackageReleaseNotes=$(PackageReleaseNotes);</NuspecProperties>
+      <NuspecProperties>$(NuspecProperties);Version=$(Version);BaseOutputPath=$(OutputPath);PackageReleaseNotes=$(PackageReleaseNotes);configuration=$(Configuration);</NuspecProperties>
     </PropertyGroup>
   </Target>
 
