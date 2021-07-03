@@ -1,10 +1,8 @@
 ﻿namespace GitBuildInfo
 {
-    using System;
     using System.ComponentModel;
     using System.Diagnostics;
-    using System.IO;
-    using System.Text;
+    using System.Diagnostics.CodeAnalysis;
     using Microsoft.Build.Framework;
     using Microsoft.Build.Utilities;
 
@@ -13,6 +11,7 @@
     ///
     /// Note: use in the BeforeBuild target.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class GitInfoTask : Task
     {
         /// <summary>
@@ -55,7 +54,7 @@
             this.CommitHash = this.RunGit("rev-parse --short HEAD");
             this.GitBranch = this.RunGit("name-rev --name-only HEAD");
             this.Log.LogMessage(MessageImportance.High, "Getting build info from git");
-            cache = new GitInfo()
+            cache = new GitInfo
             {
                 Head = this.GitHead,
                 CommitHash = this.CommitHash,

@@ -35,5 +35,6 @@
     <file src="$BaseOutputPath$zh-Hant\**" target="analyzers\cs\zh-Hant\" />
     <file src="..\..\build\**" target="build\" />
     <file src="..\..\tools\**" target="tools\" />
+    <file src="..\GitBuildInfo\bin\$configuration$\**" target="tasks\" />
   </files>
 </package>

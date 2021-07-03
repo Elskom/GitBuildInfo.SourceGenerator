@@ -1,3 +1,25 @@
 <Project>
-  <Import Project="../../build/GitBuildInfo.SourceGenerator.targets" />
+
+  <UsingTask TaskName="GitBuildInfo.GitInfoTask"
+             TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ProjectDir ParameterType="System.String" Required="true" />
+      <GitHead ParameterType="System.String" Output="true" />
+      <CommitHash ParameterType="System.String" Output="true" />
+      <GitBranch ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Source="$(MSBuildThisFileDirectory)../GitBuildInfo/GitInfoTask.cs" />
+    </Task>
+  </UsingTask>
+
+  <Target Name="GitBuildInfo" AfterTargets="BeforeBuild">
+    <GitInfoTask ProjectDir="$(MSBuildProjectDirectory)">
+      <Output TaskParameter="GitHead" PropertyName="GitHead" />
+      <Output TaskParameter="CommitHash" PropertyName="CommitHash" />
+      <Output TaskParameter="GitBranch" PropertyName="GitBranch" />
+    </GitInfoTask>
+  </Target>
+
 </Project>
