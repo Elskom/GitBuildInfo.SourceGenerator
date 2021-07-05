@@ -1,7 +1,7 @@
 <Project>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Framework" Version="*-*" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="-*" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="*-*" PrivateAssets="All" />
     <PackageReference Include="Microsoft.DotNet.Analyzers.Compatibility" Version="*-*">
       <PrivateAssets>all</PrivateAssets>
