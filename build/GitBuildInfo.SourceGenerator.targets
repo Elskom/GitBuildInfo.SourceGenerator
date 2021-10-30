@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\netstandard2.0\GitBuildInfo.dll</TaskAssembly>
-    <TaskAssembly Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)..\tasks\net472\GitBuildInfo.dll</TaskAssembly>
   </PropertyGroup>
 
   <UsingTask TaskName="GitBuildInfo.GitInfoTask" AssemblyFile="$(TaskAssembly)" />

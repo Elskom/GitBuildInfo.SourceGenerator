@@ -90,7 +90,7 @@
             }
         }
 
-        private class GitInfo
+        private sealed class GitInfo
         {
             public string Head { get; set; }
 
