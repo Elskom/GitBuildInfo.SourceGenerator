@@ -18,21 +18,22 @@ jobs:
   codacy-security-scan:
     name: Codacy Security Scan
     runs-on: ubuntu-latest
+    env:
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+      DOTNET_NOLOGO: true
+      BUILD_RERUN_COUNT: ${{ github.run_attempt }}
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout code
         uses: actions/checkout@main
 
-      - name: .NET core build
-        uses: actions/setup-dotnet@main
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
+      - name: Install latest .NET SDK
+        uses: Elskom/setup-latest-dotnet@main
 
-      - name: Restore, Build, test, and pack
+      - name: Restore, Build, and test
         uses: Elskom/build-dotnet@main
         with:
-          SOLUTION_FILE_PATH: GitBuildInfo.SourceGenerator.sln
           TEST: true
           PACK: false
 

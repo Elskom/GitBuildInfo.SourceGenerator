@@ -12,29 +12,16 @@ jobs:
       DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
       DOTNET_CLI_TELEMETRY_OPTOUT: true
       DOTNET_NOLOGO: true
+      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      BUILD_RERUN_COUNT: ${{ github.run_attempt }}
     steps:
     - uses: actions/checkout@main
-    - name: .NET core build
-      uses: actions/setup-dotnet@main
-      with:
-        dotnet-version: '6.0.x'
-        include-prerelease: true
+
+    - name: Install latest .NET SDK
+      uses: Elskom/setup-latest-dotnet@main
 
     - name: Restore, Build, test, and pack
       uses: Elskom/build-dotnet@main
       with:
-        SOLUTION_FILE_PATH: GitBuildInfo.SourceGenerator.sln
         TEST: true
-
-    - name: Publish Release
-      id: publish_nuget
-      uses: Elskom/publish-nuget@main
-      with:
-        # Filepath of the project to be packaged, relative to root of repository
-        PROJECT_FILE_PATH: '**/*.csproj'
-        # Path to store all generated nuget packages, relative to root of repository
-        PACKAGE_PATH: artifacts/
-        # Flag to toggle git tagging, enabled by default
-        TAG_COMMIT: false
-        # API key to authenticate with NuGet server
-        NUGET_KEY: ${{ secrets.NUGET_API_KEY }}
+        PUSH: true
