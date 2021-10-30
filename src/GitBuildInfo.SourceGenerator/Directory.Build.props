@@ -13,6 +13,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <NoWarn>$(NoWarn);NU5128;NU5127</NoWarn>
     <NuSpecFile>GitBuildInfo.SourceGenerator.nuspec</NuSpecFile>
+    <IsRoslynComponent>true</IsRoslynComponent>
   </PropertyGroup>
 
   <ItemGroup>
