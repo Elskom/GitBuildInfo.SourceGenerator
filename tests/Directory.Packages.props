@@ -19,7 +19,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <ProjectReference Include="../src/GitBuildInfo.SourceGenerator/GitBuildInfo.SourceGenerator.csproj" />
-    <ProjectReference Include="../src/Elskom.GitInformation/Elskom.GitInformation.csproj" />
     <ProjectReference Include="../src/GitBuildInfo/GitBuildInfo.csproj" />
   </ItemGroup>
 

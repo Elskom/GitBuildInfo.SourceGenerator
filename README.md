@@ -7,4 +7,3 @@ Source Generator for dumping the git branch information, commit hash, and if the
 | Package | Version |
 |:-------:|:-------:|
 | GitBuildInfo.SourceGenerator | [![NuGet Badge](https://buildstats.info/nuget/GitBuildInfo.SourceGenerator?includePreReleases=true)](https://www.nuget.org/packages/GitBuildInfo.SourceGenerator/) |
-| Elskom.GitInformation | [![NuGet Badge](https://buildstats.info/nuget/Elskom.GitInformation?includePreReleases=true)](https://www.nuget.org/packages/Elskom.GitInformation/) |
