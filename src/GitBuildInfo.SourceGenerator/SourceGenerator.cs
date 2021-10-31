@@ -21,11 +21,12 @@
         /// <inheritdoc/>
         public void Execute(GeneratorExecutionContext context)
         {
-            if (context.Compilation is not CSharpCompilation)
+            if (context.Compilation is not CSharpCompilation compilation)
             {
                 return;
             }
 
+            _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNamespace);
             _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitBuildInfoAssemblyType", out var assemblyType);
             _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitBuildInfoIsGeneric", out var isGeneric);
             _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitHead", out var gitHead);
@@ -35,7 +36,15 @@
                 "GitAssemblyInfo.g.cs",
                 SourceText.From(
                     Generator.CreateAndGenerateCode(
-                        new GeneratorOptions { AssemblyType = assemblyType, IsGeneric = Convert.ToBoolean(isGeneric) },
+                        new GeneratorOptions
+                        {
+                            RootNamespace = rootNamespace,
+                            AssemblyType = assemblyType,
+                            IsGeneric = Convert.ToBoolean(isGeneric),
+                            IsCSharp10OrGreater = compilation.LanguageVersion is LanguageVersion.CSharp10
+                                or LanguageVersion.Latest
+                                or LanguageVersion.Preview,
+                        },
                         new GitInfo { GitHead = gitHead, CommitHash = commitHash, GitBranch = gitBranch },
                         context),
                     Encoding.UTF8));

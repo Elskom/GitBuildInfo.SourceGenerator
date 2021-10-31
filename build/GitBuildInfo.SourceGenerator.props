@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--
+    Add the namespace for the generated attribute to the global usings list only if the C# language version is 10.0 or newer.
+    -->
+    <Using Include="Elskom.Generic.Libs" Condition="'$(ImplicitUsings)' == 'enable'" />
+    <!--
+    Add the root namespace to the global usings list only if the C# language version is 10.0 or newer.
+    -->
+    <Using Include="$(RootNamespace)" Condition="'$(ImplicitUsings)' == 'enable'" />
+    <CompilerVisibleProperty Include="RootNamespace" />
     <CompilerVisibleProperty Include="GitBuildInfoAssemblyType" />
     <CompilerVisibleProperty Include="GitBuildInfoIsGeneric" />
     <CompilerVisibleProperty Include="GitHead" />

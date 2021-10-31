@@ -6,7 +6,8 @@
     <Version>1.0.13</Version>
     <PackageReleaseNotes>Fixed issue where building can result in a build performance decrease due to having the build task being inline.
 Also made build task target .NET Standard 2.0 only.
-I think this one should work for everyone even for those using .NET Framework's msbuild.</PackageReleaseNotes>
+I think this one should work for everyone even for those using .NET Framework's msbuild.
+Also the generator now requires setting the RootNamespace msbuild property that holds the type they specifiy in the GitBuildInfoAssemblyType msbuild property.</PackageReleaseNotes>
     <Copyright>Copyright (c) 2021</Copyright>
     <!-- Suppresses the warnings about the package not having assemblies in lib/*/.dll.-->
     <NoPackageAnalysis>true</NoPackageAnalysis>

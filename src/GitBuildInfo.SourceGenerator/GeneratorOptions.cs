@@ -14,9 +14,13 @@
             DiagnosticSeverity.Warning,
             true);
 
+        public string RootNamespace { get; init; }
+
         public string AssemblyType { get; init; }
 
         public bool IsGeneric { get; init; }
+
+        internal bool IsCSharp10OrGreater { get; init; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Validate(GeneratorExecutionContext context)

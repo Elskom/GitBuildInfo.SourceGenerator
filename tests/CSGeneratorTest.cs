@@ -11,11 +11,18 @@ namespace GitBuildInfo.SourceGenerator.Tests
     {
         public List<(string, string)> GlobalOptions { get; } = new();
 
+        public LanguageVersion LanguageVersion { get; set; }
+
         protected override GeneratorDriver CreateGeneratorDriver(Project project, ImmutableArray<ISourceGenerator> sourceGenerators)
             => CSharpGeneratorDriver.Create(
                 sourceGenerators,
                 project.AnalyzerOptions.AdditionalFiles,
-                (CSharpParseOptions)project.ParseOptions!,
+                (CSharpParseOptions)CreateParseOptions(),
                 new OptionsProvider(project.AnalyzerOptions.AnalyzerConfigOptionsProvider, GlobalOptions));
+        
+        protected override ParseOptions CreateParseOptions()
+        {
+            return ((CSharpParseOptions)base.CreateParseOptions()).WithLanguageVersion(LanguageVersion);
+        }
     }
 }
