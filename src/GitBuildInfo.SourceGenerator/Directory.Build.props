@@ -3,10 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IsPackable>true</IsPackable>
-    <Version>1.0.14</Version>
-    <PackageReleaseNotes>
-      Removed MSBuild task assembly and replaced them when msbuild execute commands to grab the needed data and output them to intermediate files for the generator to use.
-    </PackageReleaseNotes>
+    <Version>1.0.15</Version>
+    <PackageReleaseNotes>Fixed bug where the git information is not properly obtained and the head information was not properly dumped to the right file name.</PackageReleaseNotes>
     <Copyright>Copyright (c) 2021</Copyright>
     <!-- Suppresses the warnings about the package not having assemblies in lib/*/.dll.-->
     <NoPackageAnalysis>true</NoPackageAnalysis>

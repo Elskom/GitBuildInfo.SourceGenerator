@@ -18,7 +18,7 @@
         WorkingDirectory="$(MSBuildProjectDirectory)"
         ConsoleToMSBuild="true"
         IgnoreExitCode="true"
-        Condition="'$(GitHead)' == ''">
+        Condition="'$(CommitHash)' == ''">
         <Output TaskParameter="ConsoleOutput" PropertyName="CommitHash" />
     </Exec>
     <Exec
@@ -26,11 +26,11 @@
         WorkingDirectory="$(MSBuildProjectDirectory)"
         ConsoleToMSBuild="true"
         IgnoreExitCode="true"
-        Condition="'$(GitHead)' == ''">
+        Condition="'$(GitBranch)' == ''">
         <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
     </Exec>
     <WriteLinesToFile
-        File="$(IntermediateOutputPath)\githead.txt"
+        File="$(IntermediateOutputPath)\git_head.txt"
         Lines="$(GitHead)"
         Condition="'$(GitHead)' != ''"
         Overwrite="true"
