@@ -202,9 +202,6 @@ using Elskom.Generic.Libs;
                     ("build_property.RootNamespace", rootNs),
                     ("build_property.GitBuildInfoAssemblyType", assemblyType),
                     ("build_property.GitBuildInfoIsGeneric", isGeneric),
-                    ("build_property.GitHead", "fbgtgretgtre"),
-                    ("build_property.CommitHash", "vfdbttregter"),
-                    ("build_property.GitBranch", "vsdfvfdsv"),
                 },
                 ReferenceAssemblies = ReferenceAssemblies.Net.Net50,
                 TestState =
@@ -213,6 +210,12 @@ using Elskom.Generic.Libs;
                     {
                         testSource
                     },
+                    AdditionalFiles =
+                    {
+                        ("git_head.txt", "fbgtgretgtre"),
+                        ("git_commit_hash.txt", "vfdbttregter"),
+                        ("git_branch.txt", "vsdfvfdsv")
+                    }
                 },
             };
             if (expectedDiagnostics is not null)

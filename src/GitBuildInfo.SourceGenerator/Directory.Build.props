@@ -3,11 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IsPackable>true</IsPackable>
-    <Version>1.0.13</Version>
-    <PackageReleaseNotes>Fixed issue where building can result in a build performance decrease due to having the build task being inline.
-Also made build task target .NET Standard 2.0 only.
-I think this one should work for everyone even for those using .NET Framework's msbuild.
-Also the generator now requires setting the RootNamespace msbuild property that holds the type they specifiy in the GitBuildInfoAssemblyType msbuild property.</PackageReleaseNotes>
+    <Version>1.0.14</Version>
+    <PackageReleaseNotes>
+      Removed MSBuild task assembly and replaced them when msbuild execute commands to grab the needed data and output them to intermediate files for the generator to use.
+    </PackageReleaseNotes>
     <Copyright>Copyright (c) 2021</Copyright>
     <!-- Suppresses the warnings about the package not having assemblies in lib/*/.dll.-->
     <NoPackageAnalysis>true</NoPackageAnalysis>

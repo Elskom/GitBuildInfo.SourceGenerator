@@ -21,6 +21,5 @@
     <file src="$BaseOutputPath$**" target="analyzers\cs\" />
     <file src="..\..\build\**" target="build\" />
     <file src="..\..\tools\**" target="tools\" />
-    <file src="..\GitBuildInfo\bin\$configuration$\**" target="tasks\" />
   </files>
 </package>

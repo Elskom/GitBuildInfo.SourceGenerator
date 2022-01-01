@@ -11,8 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B84AD34C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitBuildInfo.SourceGenerator.Tests", "tests/GitBuildInfo.SourceGenerator.Tests.csproj", "{5A9FCC65-752B-499B-A86B-ABCC6F4666D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitBuildInfo", "src\GitBuildInfo\GitBuildInfo.csproj", "{8204B51B-B642-4DC1-9844-90FF61336C17}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,22 +48,9 @@ Global
 		{5A9FCC65-752B-499B-A86B-ABCC6F4666D9}.Release|x64.Build.0 = Release|Any CPU
 		{5A9FCC65-752B-499B-A86B-ABCC6F4666D9}.Release|x86.ActiveCfg = Release|Any CPU
 		{5A9FCC65-752B-499B-A86B-ABCC6F4666D9}.Release|x86.Build.0 = Release|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Debug|x64.Build.0 = Debug|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Debug|x86.Build.0 = Debug|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Release|x64.ActiveCfg = Release|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Release|x64.Build.0 = Release|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Release|x86.ActiveCfg = Release|Any CPU
-		{8204B51B-B642-4DC1-9844-90FF61336C17}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D769E982-58EE-436B-B2A8-C35D4D55BA8D} = {99761A41-8AED-49B5-AF0F-CF6CCAE482E8}
 		{5A9FCC65-752B-499B-A86B-ABCC6F4666D9} = {B84AD34C-E5C4-418F-A58A-195C9F89A961}
-		{8204B51B-B642-4DC1-9844-90FF61336C17} = {99761A41-8AED-49B5-AF0F-CF6CCAE482E8}
 	EndGlobalSection
 EndGlobal

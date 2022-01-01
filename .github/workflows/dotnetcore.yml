@@ -11,14 +11,14 @@ jobs:
       DOTNET_NOLOGO: true
     steps:
     - uses: actions/checkout@main
-    - name: .NET core build
-      uses: actions/setup-dotnet@main
+
+    - name: Install latest .NET SDK
+      uses: Elskom/setup-latest-dotnet@main
       with:
-        dotnet-version: '6.0.x'
-        include-prerelease: true
+        VERSION_MAJOR: '6'
+        VERSION_BAND: '2xx'
 
     - name: Restore, Build, test, and pack
       uses: Elskom/build-dotnet@main
       with:
-        SOLUTION_FILE_PATH: GitBuildInfo.SourceGenerator.sln
         TEST: true

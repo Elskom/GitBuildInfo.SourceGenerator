@@ -1,17 +1,89 @@
-<Project TreatAsLocalProperty="TaskAssembly">
-
-  <PropertyGroup>
-    <TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\netstandard2.0\GitBuildInfo.dll</TaskAssembly>
-  </PropertyGroup>
-
-  <UsingTask TaskName="GitBuildInfo.GitInfoTask" AssemblyFile="$(TaskAssembly)" />
+<Project TreatAsLocalProperty="GitHead;CommitHash;GitBranch">
 
   <Target Name="GitBuildInfo" AfterTargets="BeforeBuild">
-    <GitInfoTask ProjectDir="$(MSBuildProjectDirectory)">
-      <Output TaskParameter="GitHead" PropertyName="GitHead" />
-      <Output TaskParameter="CommitHash" PropertyName="CommitHash" />
-      <Output TaskParameter="GitBranch" PropertyName="GitBranch" />
-    </GitInfoTask>
+    <Message
+        Importance="high"
+        Text="Getting build info from git"
+        Condition="'$(GitHead)' == '' AND '$(CommitHash)' == '' AND '$(GitBranch)' == ''" />
+    <Exec
+        Command="git describe --all --always --dirty"
+        WorkingDirectory="$(MSBuildProjectDirectory)"
+        ConsoleToMSBuild="true"
+        IgnoreExitCode="true"
+        Condition="'$(GitHead)' == ''">
+        <Output TaskParameter="ConsoleOutput" PropertyName="GitHead" />
+    </Exec>
+    <Exec
+        Command="git rev-parse --short HEAD"
+        WorkingDirectory="$(MSBuildProjectDirectory)"
+        ConsoleToMSBuild="true"
+        IgnoreExitCode="true"
+        Condition="'$(GitHead)' == ''">
+        <Output TaskParameter="ConsoleOutput" PropertyName="CommitHash" />
+    </Exec>
+    <Exec
+        Command="git name-rev --name-only HEAD"
+        WorkingDirectory="$(MSBuildProjectDirectory)"
+        ConsoleToMSBuild="true"
+        IgnoreExitCode="true"
+        Condition="'$(GitHead)' == ''">
+        <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
+    </Exec>
+    <WriteLinesToFile
+        File="$(IntermediateOutputPath)\githead.txt"
+        Lines="$(GitHead)"
+        Condition="'$(GitHead)' != ''"
+        Overwrite="true"
+        WriteOnlyWhenDifferent="true" />
+    <WriteLinesToFile
+        File="$(IntermediateOutputPath)\git_head.txt"
+        Lines="Not a git clone or git is not in Path."
+        Condition="'$(GitHead)' == ''"
+        Overwrite="true"
+        WriteOnlyWhenDifferent="true" />
+    <WriteLinesToFile
+        File="$(IntermediateOutputPath)\git_commit_hash.txt"
+        Lines="$(CommitHash)"
+        Condition="'$(CommitHash)' != ''"
+        Overwrite="true"
+        WriteOnlyWhenDifferent="true" />
+    <WriteLinesToFile
+        File="$(IntermediateOutputPath)\git_commit_hash.txt"
+        Lines="Not a git clone or git is not in Path."
+        Condition="'$(CommitHash)' == ''"
+        Overwrite="true"
+        WriteOnlyWhenDifferent="true" />
+    <WriteLinesToFile
+        File="$(IntermediateOutputPath)\git_branch.txt"
+        Lines="$(GitBranch)"
+        Condition="'$(GitBranch)' != ''"
+        Overwrite="true"
+        WriteOnlyWhenDifferent="true" />
+    <WriteLinesToFile
+        File="$(IntermediateOutputPath)\git_branch.txt"
+        Lines="Not a git clone or git is not in Path."
+        Condition="'$(GitBranch)' == ''"
+        Overwrite="true"
+        WriteOnlyWhenDifferent="true" />
   </Target>
+
+  <ItemGroup>
+    <!--
+    Add the namespace for the generated attribute to the global usings list only if the C# language version is 10.0 or newer.
+    -->
+    <Using Include="Elskom.Generic.Libs" Condition="'$(ImplicitUsings)' == 'enable'" />
+    <!--
+    Add the root namespace to the global usings list only if the C# language version is 10.0 or newer.
+
+    Also avoid trying to add Elskom.Generic.Libs twice when RootNamespace is that value.
+    -->
+    <Using Include="$(RootNamespace)" Condition="'$(ImplicitUsings)' == 'enable' AND '$(RootNamespace)' != 'Elskom.Generic.Libs'" />
+    <CompilerVisibleProperty Include="RootNamespace" />
+    <CompilerVisibleProperty Include="GitBuildInfoAssemblyType" />
+    <CompilerVisibleProperty Include="GitBuildInfoIsGeneric" />
+    <AdditionalFiles Include="$(IntermediateOutputPath)\git_head.txt" />
+    <AdditionalFiles Include="$(IntermediateOutputPath)\git_commit_hash.txt" />
+    <AdditionalFiles Include="$(IntermediateOutputPath)\git_branch.txt" />
+  </ItemGroup>
 
 </Project>

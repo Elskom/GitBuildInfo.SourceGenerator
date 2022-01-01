@@ -19,6 +19,9 @@ jobs:
 
     - name: Install latest .NET SDK
       uses: Elskom/setup-latest-dotnet@main
+      with:
+        VERSION_MAJOR: '6'
+        VERSION_BAND: '2xx'
 
     - name: Restore, Build, test, and pack
       uses: Elskom/build-dotnet@main

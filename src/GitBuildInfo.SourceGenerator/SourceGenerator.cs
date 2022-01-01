@@ -2,6 +2,7 @@
 {
     using System;
     using System.Text;
+    using System.Linq;
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CSharp;
     using Microsoft.CodeAnalysis.Text;
@@ -29,9 +30,9 @@
             _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.RootNamespace", out var rootNamespace);
             _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitBuildInfoAssemblyType", out var assemblyType);
             _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitBuildInfoIsGeneric", out var isGeneric);
-            _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitHead", out var gitHead);
-            _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.CommitHash", out var commitHash);
-            _ = context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("build_property.GitBranch", out var gitBranch);
+            var gitHead = context.AdditionalFiles.First(text => text.Path.EndsWith("git_head.txt")).GetText()?.ToString();
+            var commitHash = context.AdditionalFiles.First(text => text.Path.EndsWith("git_commit_hash.txt")).GetText()?.ToString();
+            var gitBranch = context.AdditionalFiles.First(text => text.Path.EndsWith("git_branch.txt")).GetText()?.ToString();
             context.AddSource(
                 "GitAssemblyInfo.g.cs",
                 SourceText.From(
@@ -45,7 +46,12 @@
                                 or LanguageVersion.Latest
                                 or LanguageVersion.Preview,
                         },
-                        new GitInfo { GitHead = gitHead, CommitHash = commitHash, GitBranch = gitBranch },
+                        new GitInfo
+                        {
+                            GitHead = gitHead!.Trim(Environment.NewLine.ToCharArray()),
+                            CommitHash = commitHash!.Trim(Environment.NewLine.ToCharArray()),
+                            GitBranch = gitBranch!.Trim(Environment.NewLine.ToCharArray()),
+                        },
                         context),
                     Encoding.UTF8));
         }
