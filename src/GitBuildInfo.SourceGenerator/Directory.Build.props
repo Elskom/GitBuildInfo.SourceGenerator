@@ -4,14 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>true</IsPackable>
-    <Version>1.0.15</Version>
-    <PackageReleaseNotes>Fixed bug where the git information is not properly obtained and the head information was not properly dumped to the right file name.</PackageReleaseNotes>
+    <Version>1.0.16</Version>
+    <PackageReleaseNotes>Fixed issue where the roslyn dependencies gets placed in the nuget package.</PackageReleaseNotes>
     <Copyright>Copyright (c) 2021-2022</Copyright>
     <!-- Suppresses the warnings about the package not having assemblies in lib/*/.dll.-->
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <!-- Special properties for analyzer packages. -->
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <NoWarn>$(NoWarn);NU5128;NU5127</NoWarn>
     <NuSpecFile>GitBuildInfo.SourceGenerator.nuspec</NuSpecFile>
     <IsRoslynComponent>true</IsRoslynComponent>

@@ -10,6 +10,7 @@
         WorkingDirectory="$(MSBuildProjectDirectory)"
         ConsoleToMSBuild="true"
         IgnoreExitCode="true"
+        StandardOutputImportance="low"
         Condition="'$(GitHead)' == ''">
         <Output TaskParameter="ConsoleOutput" PropertyName="GitHead" />
     </Exec>
@@ -18,6 +19,7 @@
         WorkingDirectory="$(MSBuildProjectDirectory)"
         ConsoleToMSBuild="true"
         IgnoreExitCode="true"
+        StandardOutputImportance="low"
         Condition="'$(CommitHash)' == ''">
         <Output TaskParameter="ConsoleOutput" PropertyName="CommitHash" />
     </Exec>
@@ -26,6 +28,7 @@
         WorkingDirectory="$(MSBuildProjectDirectory)"
         ConsoleToMSBuild="true"
         IgnoreExitCode="true"
+        StandardOutputImportance="low"
         Condition="'$(GitBranch)' == ''">
         <Output TaskParameter="ConsoleOutput" PropertyName="GitBranch" />
     </Exec>
