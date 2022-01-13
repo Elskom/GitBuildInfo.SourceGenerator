@@ -1,12 +1,9 @@
-namespace GitBuildInfo.SourceGenerator.Tests
-{
-    using System.Collections.Generic;
+namespace GitBuildInfo.SourceGenerator.Tests;
 
-    public interface IGeneratorTestBase
-    {
-        /// <summary>
-        /// Allows you to specify additional global options that will appear in the context.AnalyzerConfigOptions.GlobalOptions object.
-        /// </summary>
-        public List<(string, string)> GlobalOptions { get; }
-    }
+public interface IGeneratorTestBase
+{
+    /// <summary>
+    /// Allows you to specify additional global options that will appear in the context.AnalyzerConfigOptions.GlobalOptions object.
+    /// </summary>
+    public List<(string, string)> GlobalOptions { get; }
 }

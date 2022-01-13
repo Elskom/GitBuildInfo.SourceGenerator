@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <IsPackable>true</IsPackable>
     <Version>1.0.15</Version>
     <PackageReleaseNotes>Fixed bug where the git information is not properly obtained and the head information was not properly dumped to the right file name.</PackageReleaseNotes>
-    <Copyright>Copyright (c) 2021</Copyright>
+    <Copyright>Copyright (c) 2021-2022</Copyright>
     <!-- Suppresses the warnings about the package not having assemblies in lib/*/.dll.-->
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <!-- Special properties for analyzer packages. -->
@@ -14,6 +15,7 @@
     <NoWarn>$(NoWarn);NU5128;NU5127</NoWarn>
     <NuSpecFile>GitBuildInfo.SourceGenerator.nuspec</NuSpecFile>
     <IsRoslynComponent>true</IsRoslynComponent>
+    <NoWarn>RS2003</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +28,13 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>$(AssemblyName).Tests</_Parameter1> <!-- We use the value of AssemblyName to declare the value of the attribute -->
     </AssemblyAttribute>
+    <Using Include="System.Runtime.CompilerServices" />
+    <Using Include="System.Text" />
+    <!-- Required dotnet/roslyn usings. -->
+    <Using Include="Microsoft.CodeAnalysis" />
+    <Using Include="Microsoft.CodeAnalysis.CSharp" />
+    <Using Include="Microsoft.CodeAnalysis.CSharp.Syntax" />
+    <Using Include="Microsoft.CodeAnalysis.Text" />
   </ItemGroup>
 
   <Import Project="../../Directory.Build.props" />

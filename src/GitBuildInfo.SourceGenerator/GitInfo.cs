@@ -1,11 +1,10 @@
-﻿namespace GitBuildInfo.SourceGenerator
+﻿namespace GitBuildInfo.SourceGenerator;
+
+internal class GitInfo
 {
-    public record GitInfo
-    {
-        public string GitHead { get; init; }
+    public string GitHead { get; set; }
 
-        public string CommitHash { get; init; }
+    public string CommitHash { get; set; }
 
-        public string GitBranch { get; init; }
-    }
+    public string GitBranch { get; set; }
 }

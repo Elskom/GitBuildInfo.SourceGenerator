@@ -1,42 +1,37 @@
-﻿namespace GitBuildInfo.SourceGenerator
+﻿namespace GitBuildInfo.SourceGenerator;
+
+internal class GeneratorOptions
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using Microsoft.CodeAnalysis;
+    internal static readonly DiagnosticDescriptor ValidationWarning = new(
+        "GITINFO000",
+        "GitBuildInfoSourceGeneratorConfigurationValidationWarning",
+        "{0} should not be an empty string",
+        "Functionality",
+        DiagnosticSeverity.Warning,
+        true);
 
-    public record GeneratorOptions
+    public string RootNamespace { get; set; }
+
+    public string AssemblyType { get; set; }
+
+    public bool IsGeneric { get; set; }
+
+    internal bool IsCSharp10OrGreater { get; set; }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Validate(GeneratorExecutionContext context)
     {
-        internal static readonly DiagnosticDescriptor ValidationWarning = new(
-            "GITINFO000",
-            "GitBuildInfoSourceGeneratorConfigurationValidationWarning",
-            "{0} should not be an empty string",
-            "Functionality",
-            DiagnosticSeverity.Warning,
-            true);
-
-        public string RootNamespace { get; init; }
-
-        public string AssemblyType { get; init; }
-
-        public bool IsGeneric { get; init; }
-
-        internal bool IsCSharp10OrGreater { get; init; }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Validate(GeneratorExecutionContext context)
+        if (string.IsNullOrEmpty(this.AssemblyType))
         {
-            if (string.IsNullOrEmpty(this.AssemblyType))
-            {
-                context.ReportDiagnostic(
-                    Diagnostic.Create(
-                        ValidationWarning,
-                        null,
-                        nameof(AssemblyType)));
-                throw new InvalidOperationException(
-                    string.Format(
-                        ValidationWarning.MessageFormat.ToString(),
-                        nameof(AssemblyType)));
-            }
+            context.ReportDiagnostic(
+                Diagnostic.Create(
+                    ValidationWarning,
+                    null,
+                    nameof(this.AssemblyType)));
+            throw new InvalidOperationException(
+                string.Format(
+                    ValidationWarning.MessageFormat.ToString(),
+                    nameof(this.AssemblyType)));
         }
     }
 }

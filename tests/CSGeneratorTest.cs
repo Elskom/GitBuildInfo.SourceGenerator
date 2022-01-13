@@ -1,28 +1,18 @@
-namespace GitBuildInfo.SourceGenerator.Tests
+namespace GitBuildInfo.SourceGenerator.Tests;
+
+public class CSGeneratorTest : CSharpSourceGeneratorTest<SourceGenerator, XUnitVerifier>, IGeneratorTestBase
 {
-    using System.Collections.Generic;
-    using System.Collections.Immutable;
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Testing;
-    using Microsoft.CodeAnalysis.Testing.Verifiers;
+    public List<(string, string)> GlobalOptions { get; } = new();
 
-    public class CSGeneratorTest : CSharpSourceGeneratorTest<SourceGenerator, XUnitVerifier>, IGeneratorTestBase
-    {
-        public List<(string, string)> GlobalOptions { get; } = new();
+    public Microsoft.CodeAnalysis.CSharp.LanguageVersion LanguageVersion { get; set; }
 
-        public LanguageVersion LanguageVersion { get; set; }
+    protected override GeneratorDriver CreateGeneratorDriver(Project project, ImmutableArray<ISourceGenerator> sourceGenerators)
+        => CSharpGeneratorDriver.Create(
+            sourceGenerators,
+            project.AnalyzerOptions.AdditionalFiles,
+            (CSharpParseOptions)this.CreateParseOptions(),
+            new OptionsProvider(project.AnalyzerOptions.AnalyzerConfigOptionsProvider, this.GlobalOptions));
 
-        protected override GeneratorDriver CreateGeneratorDriver(Project project, ImmutableArray<ISourceGenerator> sourceGenerators)
-            => CSharpGeneratorDriver.Create(
-                sourceGenerators,
-                project.AnalyzerOptions.AdditionalFiles,
-                (CSharpParseOptions)CreateParseOptions(),
-                new OptionsProvider(project.AnalyzerOptions.AnalyzerConfigOptionsProvider, GlobalOptions));
-        
-        protected override ParseOptions CreateParseOptions()
-        {
-            return ((CSharpParseOptions)base.CreateParseOptions()).WithLanguageVersion(LanguageVersion);
-        }
-    }
+    protected override ParseOptions CreateParseOptions()
+        => ((CSharpParseOptions)base.CreateParseOptions()).WithLanguageVersion(this.LanguageVersion);
 }

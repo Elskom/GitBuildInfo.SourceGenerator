@@ -1,86 +1,52 @@
-﻿namespace GitBuildInfo.SourceGenerator
+﻿namespace GitBuildInfo.SourceGenerator;
+
+internal class Generator
 {
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.CodeAnalysis;
-    using Microsoft.CodeAnalysis.CSharp;
-    using Microsoft.CodeAnalysis.CSharp.Syntax;
+    private readonly GeneratorOptions options;
+    private readonly GitInfo gitInfo;
 
-    internal class Generator
+    private Generator(GeneratorOptions options, GitInfo gitInfo)
     {
-        private readonly GeneratorOptions options;
-        private readonly GitInfo gitInfo;
+        this.options = options;
+        this.gitInfo = gitInfo;
+    }
 
-        private Generator(GeneratorOptions options, GitInfo gitInfo)
+    public static string CreateAndGenerateCode(GeneratorOptions options, GitInfo gitInfo, GeneratorExecutionContext context)
+    {
+        try
         {
-            this.options = options;
-            this.gitInfo = gitInfo;
-        }
+            var generator = Create(options, gitInfo, context);
+            if (generator.options.IsCSharp10OrGreater)
+            {
+                return generator.GenerateCodeCSharp10(generator.options.AssemblyType).ToFullString();
+            }
 
-        public static string CreateAndGenerateCode(GeneratorOptions options, GitInfo gitInfo, GeneratorExecutionContext context)
+            return generator.GenerateCodeCSharp9(
+                string.IsNullOrEmpty(generator.options.RootNamespace) ? Array.Empty<string>() : generator.options.RootNamespace.Split('.'),
+                "Elskom.Generic.Libs",
+                generator.options.AssemblyType).ToFullString();
+        }
+        catch (InvalidOperationException)
         {
-            try
-            {
-                var generator = Create(options, gitInfo, context);
-                if (generator.options.IsCSharp10OrGreater)
-                {
-                    return generator.GenerateCodeCSharp10(generator.options.AssemblyType).ToFullString();
-                }
-
-                return generator.GenerateCodeCSharp9(
-                    string.IsNullOrEmpty(generator.options.RootNamespace) ? Array.Empty<string>() : generator.options.RootNamespace.Split('.'),
-                    "Elskom.Generic.Libs",
-                    generator.options.AssemblyType).ToFullString();
-            }
-            catch (InvalidOperationException)
-            {
-                return string.Empty;
-            }
+            return string.Empty;
         }
+    }
 
-        public CompilationUnitSyntax GenerateCodeCSharp9(string[] usings, string originalnamespace, string typeName)
-            => SyntaxFactory.CompilationUnit().WithUsings(
-                    SyntaxFactory.List(
-                        string.Equals(string.Join(".", usings), originalnamespace, StringComparison.Ordinal) ||
-                        usings.Length is 0
-                            ? new[]
-                            {
-                                AddUsing(new[] {"Elskom", "Generic", "Libs"}, true)
-                            }
-                            : new[]
-                            {
-                                AddUsing(new[] {"Elskom", "Generic", "Libs"}, true),
-                                AddUsing(usings, false)
-                            }))
-                .WithAttributeLists(
-                    SyntaxFactory.SingletonList(
-                        SyntaxFactory.AttributeList(
-                                SyntaxFactory.SingletonSeparatedList(
-                                    SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("GitInformationAttribute"))
-                                        .WithArgumentList(
-                                            SyntaxFactory.AttributeArgumentList(
-                                                SyntaxFactory.SeparatedList<AttributeArgumentSyntax>(
-                                                    this.MakeAttributeArgumentList(typeName))))))
-                            .WithOpenBracketToken(
-                                SyntaxFactory.Token(
-                                    SyntaxFactory.TriviaList(SyntaxFactory.LineFeed),
-                                    SyntaxKind.OpenBracketToken,
-                                    SyntaxFactory.TriviaList()))
-                            .WithTarget(
-                                SyntaxFactory.AttributeTargetSpecifier(SyntaxFactory.Token(SyntaxKind.AssemblyKeyword))
-                                    .WithColonToken(
-                                        SyntaxFactory.Token(
-                                            SyntaxFactory.TriviaList(),
-                                            SyntaxKind.ColonToken,
-                                            SyntaxFactory.TriviaList(SyntaxFactory.Space))))
-                            .WithCloseBracketToken(
-                                SyntaxFactory.Token(
-                                    SyntaxFactory.TriviaList(),
-                                    SyntaxKind.CloseBracketToken,
-                                    SyntaxFactory.TriviaList(SyntaxFactory.LineFeed)))));
-
-        public CompilationUnitSyntax GenerateCodeCSharp10(string typeName)
-            => SyntaxFactory.CompilationUnit().WithAttributeLists(
+    public CompilationUnitSyntax GenerateCodeCSharp9(string[] usings, string originalnamespace, string typeName)
+        => SyntaxFactory.CompilationUnit().WithUsings(
+                SyntaxFactory.List(
+                    string.Equals(string.Join(".", usings), originalnamespace, StringComparison.Ordinal) ||
+                    usings.Length is 0
+                        ? new[]
+                        {
+                            AddUsing(new[] {"Elskom", "Generic", "Libs"}, true)
+                        }
+                        : new[]
+                        {
+                            AddUsing(new[] {"Elskom", "Generic", "Libs"}, true),
+                            AddUsing(usings, false)
+                        }))
+            .WithAttributeLists(
                 SyntaxFactory.SingletonList(
                     SyntaxFactory.AttributeList(
                             SyntaxFactory.SingletonSeparatedList(
@@ -91,10 +57,7 @@
                                                 this.MakeAttributeArgumentList(typeName))))))
                         .WithOpenBracketToken(
                             SyntaxFactory.Token(
-                                SyntaxFactory.TriviaList(
-                                    SyntaxFactory.Comment("// <autogenerated/>"),
-                                    SyntaxFactory.LineFeed,
-                                    SyntaxFactory.LineFeed),
+                                SyntaxFactory.TriviaList(SyntaxFactory.LineFeed),
                                 SyntaxKind.OpenBracketToken,
                                 SyntaxFactory.TriviaList()))
                         .WithTarget(
@@ -110,83 +73,113 @@
                                 SyntaxKind.CloseBracketToken,
                                 SyntaxFactory.TriviaList(SyntaxFactory.LineFeed)))));
 
-        private static Generator Create(GeneratorOptions options, GitInfo gitInfo, GeneratorExecutionContext context)
-        {
-            var generator = new Generator(options, gitInfo);
-            generator.options.Validate(context);
-            return generator;
-        }
+    public CompilationUnitSyntax GenerateCodeCSharp10(string typeName)
+        => SyntaxFactory.CompilationUnit().WithAttributeLists(
+            SyntaxFactory.SingletonList(
+                SyntaxFactory.AttributeList(
+                        SyntaxFactory.SingletonSeparatedList(
+                            SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("GitInformationAttribute"))
+                                .WithArgumentList(
+                                    SyntaxFactory.AttributeArgumentList(
+                                        SyntaxFactory.SeparatedList<AttributeArgumentSyntax>(
+                                            this.MakeAttributeArgumentList(typeName))))))
+                    .WithOpenBracketToken(
+                        SyntaxFactory.Token(
+                            SyntaxFactory.TriviaList(
+                                SyntaxFactory.Comment("// <autogenerated/>"),
+                                SyntaxFactory.LineFeed,
+                                SyntaxFactory.LineFeed),
+                            SyntaxKind.OpenBracketToken,
+                            SyntaxFactory.TriviaList()))
+                    .WithTarget(
+                        SyntaxFactory.AttributeTargetSpecifier(SyntaxFactory.Token(SyntaxKind.AssemblyKeyword))
+                            .WithColonToken(
+                                SyntaxFactory.Token(
+                                    SyntaxFactory.TriviaList(),
+                                    SyntaxKind.ColonToken,
+                                    SyntaxFactory.TriviaList(SyntaxFactory.Space))))
+                    .WithCloseBracketToken(
+                        SyntaxFactory.Token(
+                            SyntaxFactory.TriviaList(),
+                            SyntaxKind.CloseBracketToken,
+                            SyntaxFactory.TriviaList(SyntaxFactory.LineFeed)))));
 
-        private static UsingDirectiveSyntax AddUsing(string[] strings, bool autogeneratedheader)
+    private static Generator Create(GeneratorOptions options, GitInfo gitInfo, GeneratorExecutionContext context)
+    {
+        var generator = new Generator(options, gitInfo);
+        generator.options.Validate(context);
+        return generator;
+    }
+
+    private static UsingDirectiveSyntax AddUsing(string[] strings, bool autogeneratedheader)
+    {
+        NameSyntax qualifiedName = null;
+        List<string> strs = new();
+        foreach (var str in strings)
         {
-            NameSyntax qualifiedName = null;
-            List<string> strs = new();
-            foreach (var str in strings)
+            // avoid regressions here.
+            if (strs.Contains(str))
             {
-                // avoid regressions here.
-                if (strs.Contains(str))
-                {
-                    continue;
-                }
-
-                qualifiedName = strings.Length > 1 && str == strings[0]
-                    ? SyntaxFactory.QualifiedName(
-                        SyntaxFactory.IdentifierName(str),
-                        SyntaxFactory.IdentifierName(strings[Array.IndexOf(strings, str) + 1]))
-                    : strings.Length is 1
-                        ? SyntaxFactory.IdentifierName(str)
-                        : SyntaxFactory.QualifiedName(qualifiedName!, SyntaxFactory.IdentifierName(str));
-                strs.Add(str);
-                if (strings.Length > 1 && str == strings[0])
-                {
-                    strs.Add(strings[Array.IndexOf(strings, str) + 1]);
-                }
+                continue;
             }
 
-            strs.Clear();
-            return SyntaxFactory.UsingDirective(qualifiedName!)
-                .WithUsingKeyword(SyntaxFactory.Token(
-                    SyntaxFactory.TriviaList(autogeneratedheader
-                        ? new[] {SyntaxFactory.Comment("// <autogenerated/>"), SyntaxFactory.LineFeed}
-                        : Array.Empty<SyntaxTrivia>()),
-                    SyntaxKind.UsingKeyword,
-                    SyntaxFactory.TriviaList(SyntaxFactory.Space)))
-                .WithSemicolonToken(SyntaxFactory.Token(
-                    SyntaxFactory.TriviaList(),
-                    SyntaxKind.SemicolonToken,
-                    SyntaxFactory.TriviaList(SyntaxFactory.LineFeed)));
+            qualifiedName = strings.Length > 1 && str == strings[0]
+                ? SyntaxFactory.QualifiedName(
+                    SyntaxFactory.IdentifierName(str),
+                    SyntaxFactory.IdentifierName(strings[Array.IndexOf(strings, str) + 1]))
+                : strings.Length is 1
+                    ? SyntaxFactory.IdentifierName(str)
+                    : SyntaxFactory.QualifiedName(qualifiedName!, SyntaxFactory.IdentifierName(str));
+            strs.Add(str);
+            if (strings.Length > 1 && str == strings[0])
+            {
+                strs.Add(strings[Array.IndexOf(strings, str) + 1]);
+            }
         }
 
-        private SyntaxNodeOrToken[] MakeAttributeArgumentList(string typeName)
-        {
-            var lst = new SyntaxNodeOrToken[7];
-            var args = new[]
-            {
-                this.gitInfo.GitHead,
-                this.gitInfo.CommitHash,
-                this.gitInfo.GitBranch
-            };
-            var lstIndex = 0;
-            foreach (var arg in args)
-            {
-                lst[lstIndex] = SyntaxFactory.AttributeArgument(
-                    SyntaxFactory.LiteralExpression(
-                        SyntaxKind.StringLiteralExpression,
-                        SyntaxFactory.Literal(arg)));
-                lstIndex++;
-                lst[lstIndex] = SyntaxFactory.Token(
-                    SyntaxFactory.TriviaList(),
-                    SyntaxKind.CommaToken,
-                    SyntaxFactory.TriviaList(SyntaxFactory.Space));
-                lstIndex++;
-            }
+        strs.Clear();
+        return SyntaxFactory.UsingDirective(qualifiedName!)
+            .WithUsingKeyword(SyntaxFactory.Token(
+                SyntaxFactory.TriviaList(autogeneratedheader
+                    ? new[] {SyntaxFactory.Comment("// <autogenerated/>"), SyntaxFactory.LineFeed}
+                    : Array.Empty<SyntaxTrivia>()),
+                SyntaxKind.UsingKeyword,
+                SyntaxFactory.TriviaList(SyntaxFactory.Space)))
+            .WithSemicolonToken(SyntaxFactory.Token(
+                SyntaxFactory.TriviaList(),
+                SyntaxKind.SemicolonToken,
+                SyntaxFactory.TriviaList(SyntaxFactory.LineFeed)));
+    }
 
+    private SyntaxNodeOrToken[] MakeAttributeArgumentList(string typeName)
+    {
+        var lst = new SyntaxNodeOrToken[7];
+        var args = new[]
+        {
+            this.gitInfo.GitHead,
+            this.gitInfo.CommitHash,
+            this.gitInfo.GitBranch
+        };
+        var lstIndex = 0;
+        foreach (var arg in args)
+        {
             lst[lstIndex] = SyntaxFactory.AttributeArgument(
-                SyntaxFactory.TypeOfExpression(
-                    this.options.IsGeneric
-                        ? SyntaxFactory.GenericName(typeName)
-                        : SyntaxFactory.IdentifierName(typeName)));
-            return lst;
+                SyntaxFactory.LiteralExpression(
+                    SyntaxKind.StringLiteralExpression,
+                    SyntaxFactory.Literal(arg)));
+            lstIndex++;
+            lst[lstIndex] = SyntaxFactory.Token(
+                SyntaxFactory.TriviaList(),
+                SyntaxKind.CommaToken,
+                SyntaxFactory.TriviaList(SyntaxFactory.Space));
+            lstIndex++;
         }
+
+        lst[lstIndex] = SyntaxFactory.AttributeArgument(
+            SyntaxFactory.TypeOfExpression(
+                this.options.IsGeneric
+                    ? SyntaxFactory.GenericName(typeName)
+                    : SyntaxFactory.IdentifierName(typeName)));
+        return lst;
     }
 }

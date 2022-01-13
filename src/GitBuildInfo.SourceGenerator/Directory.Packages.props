@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="*-*" />
-    <PackageReference Include="IsExternalInit" Version="*-*" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,20 @@
+<Project>
+
+  <ItemGroup>
+    <Using Include="System.Collections.Immutable" />
+    <Using Include="System.Diagnostics.CodeAnalysis" />
+    <Using Include="System.Threading.Tasks" />
+    <!-- Required dotnet/roslyn usings. -->
+    <Using Include="Microsoft.CodeAnalysis" />
+    <Using Include="Microsoft.CodeAnalysis.CSharp" />
+    <Using Include="Microsoft.CodeAnalysis.CSharp.Testing" />
+    <Using Include="Microsoft.CodeAnalysis.Diagnostics" />
+    <Using Include="Microsoft.CodeAnalysis.Testing" />
+    <Using Include="Microsoft.CodeAnalysis.Testing.Verifiers" />
+    <Using Include="Microsoft.CodeAnalysis.VisualBasic" />
+    <Using Include="Microsoft.CodeAnalysis.VisualBasic.Testing" />
+    <!-- Required xunit usings. -->
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>
