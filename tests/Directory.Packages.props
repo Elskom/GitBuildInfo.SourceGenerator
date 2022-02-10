@@ -4,7 +4,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis" Version="4.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*-*" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.XUnit" Version="*-*" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.SourceGenerators.Testing" Version="*-*" />
+    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.SourceGenerators.Testing" Version="-*" />
     <PackageReference Include="xunit" Version="*-*" />
     <PackageReference Include="xunit.runner.visualstudio" Version="*-*">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
